@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .carousel {
+            max-width: 320px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        .ct {
+            display: flex;
+        }
+        
+        img {
+            width: 320px;
+        }
+        
+        .arrow {
+            position: absolute;
+            top: 50%;
+            margin-top: -13px;
+            display: inline-block;
+            text-align: center;
+            height: 25px;
+            width: 25px;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .arrow:hover,
+        .bullet li:hover {
+            opacity: 0.7;
+        }
+        
+        .pre {
+            left: 10px;
+        }
+        
+        .next {
+            right: 10px;
+        }
+        
+        .bullet {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            margin-left: -100px;
+            display: flex;
+            justify-content: space-between;
+            width: 200px;
+            height: 10px;
+        }
+        
+        .bullet li {
+            display: inline-block;
+            width: 20px;
+            padding: 5px;
+            background: white;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        li.active {
+            background: #333
+        }
+    </style>
+</head>
+
+<body>
+    <div class="carousel">
+        <ul class="ct">
+            <li data-id=0>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/26.jpg"></a>
+            </li>
+            <li data-id=1>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/25.jpg"></a>
+            </li>
+            <li data-id=2>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/24.jpg"></a>
+            </li>
+            <li data-id=3>
+                <a href="#"><img src="http://cdn.jirengu.com/book.jirengu.com/img/23.jpg"></a>
+            </li>
+        </ul>
+        <a href="#" class="pre arrow">
+            <</a>
+                <a href="#" class="next arrow">></a>
+                <ul class="bullet">
+                    <li class="active"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+    </div>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js">
+    </script>
+    <script>
+        let n = 1;
+        let timeId;
+        autoPlay();
+
+        function autoPlay() {
+            timeId = setInterval(function() {
+                playN()
+            }, 3000)
+        }
+
+        function playN() {
+            if (n == 4) {
+                n = 0;
+            }
+            $('.ct').css({
+                transform: `translateX(${-320*n}px)`
+            })
+            $('.bullet li').eq(n).addClass('active');
+            $('.bullet li').eq(n).siblings().removeClass('active');
+            n++;
+            $('.ct').fadeOut(500)
+            $('.ct').fadeIn(500)
+        }
+        $('.bullet li').on('click', function(e) {
+            window.clearInterval(timeId);
+            let $button = $(e.currentTarget);
+            n = $button.index();
+            playN();
+            autoPlay();
+        })
+        $('.pre').on('click', function() {
+            window.clearInterval(timeId);
+            n = $('.active').index() - 1;
+            playN();
+            autoPlay();
+        })
+        $('.next').on('click', function() {
+            window.clearInterval(timeId);
+            n = $('.active').index() + 1;
+            playN();
+            autoPlay();
+        })
+    </script>
+</body>
+
+</html>

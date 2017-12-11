@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        li {
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="container">
+
+    </ul>
+    <script>
+        //创建数组[0,1,2...15]
+        var range_16 = Array.from(Array(16).keys());
+        var imgPlaceholder = '#'
+        var imgListDOM = range_16.map(function(value, index) {
+            return `<li>
+                    <img data-src='http://cdn.jirengu.com/book.jirengu.com/img/${value+1}.jpg' src=${imgPlaceholder}>
+                    </li>
+            `
+        })
+        var containerDom = document.querySelectorAll('.container')[0];
+        containerDom.innerHTML = imgListDOM.join('');
+        //主逻辑
+        var LazyLoad = function(targetDom) {
+            this.node = targetDom;
+            //首屏检查
+            this.check();
+            //滚动监听
+            this.addScrollEvent();
+        }
+        LazyLoad.prototype.check = function() {
+                var windowHeight = screen.availHeight;
+                var scrollTop = document.body.scrollTop;
+                var offsetTop = this.node.offsetTop;
+                var nodeHeight = this.node.offsetHeight;
+                if (windowHeight + scrollTop > offsetTop && scrollTop < offsetTop + nodeHeight) {
+                    this.triggerLoad();
+                }
+            }
+            //滚动监听
+        LazyLoad.prototype.addScrollEvent = function() {
+                var _this = this;
+                //核心逻辑
+                window.addEventListener('scroll', function(e) {
+                    _this.check();
+                })
+            }
+            //触发加载
+        LazyLoad.prototype.triggerLoad = function() {
+            var imgNode = this.node.querySelectorAll('img')[0];
+            var imgUrl = imgNode.getAttribute('data-src');
+            imgNode.setAttribute('src', imgUrl);
+        }
+
+
+        //初始化
+        var init = function(container) {
+            [].slice.call(container.children).forEach(function(childDOM) {
+                new LazyLoad(childDOM)
+            });
+        }
+        init(containerDom);
+    </script>
+</body>
+
+</html>

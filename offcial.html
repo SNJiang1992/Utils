@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!--
+Created using JS Bin
+http://js.jirengu.com
+
+Copyright (c) 2017 by johnhank (http://js.jirengu.com/gowil/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+    <meta name="robots" content="noindex">
+    <title>YueLian</title>
+
+    <style id="jsbin-css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            z-index: 1;
+            height: 75px;
+            width: 100%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 2px 2px 3px;
+        }
+
+        nav a {
+            text-decoration: none;
+            margin-left: 40px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #009dff;
+        }
+
+        nav a:hover {
+            opacity: 0.6;
+        }
+
+        nav img {
+            height: 75px;
+        }
+
+        header {
+            position: relative;
+            height: 600px;
+            margin-top: 75px;
+            background: url(http://www.yue-lian.cn/web/images/banner.jpg) no-repeat center;
+            background-size: cover;
+        }
+
+        header .info {
+            position: absolute;
+            padding: 200px 0;
+            right: 10%;
+            width: 35%;
+            font-size: 14px;
+            color: white;
+        }
+
+        .info p {
+            color: #fff;
+            font-size: 1em;
+            line-height: 1.8em;
+        }
+
+        header a {
+            color: #fff;
+            padding: .6em 3em;
+            font-size: 1.1em;
+            border: 2px solid #009dff;
+            border-radius: 5px;
+            background: #009dff;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        header a:hover {
+            background: transparent;
+            border: 2px solid white;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30px;
+            margin-top: 30px;
+            color: #3598db;
+        }
+
+        h2 {
+            color: #3E3E3E;
+            font-size: 1.3em;
+        }
+
+        p {
+            color: #999;
+        }
+
+        section {
+            margin-top: 30px;
+        }
+
+        #yue-lian .layout {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        #yue-lian .lists {
+            width: 40%;
+            padding: 20px 5%;
+        }
+
+        #yue-lian .lists img {
+            float: left;
+            display: inline-block;
+        }
+
+        #yue-lian .lists h2 {
+            margin-left: 110px;
+            color: #3e3e3e;
+        }
+
+        #yue-lian .lists p {
+            margin-left: 110px;
+            margin-top: 10px;
+            color: #999;
+        }
+
+        #about {
+            background-color: #f7f7f7;
+        }
+
+        #about .img {
+            width: 50%;
+            height: 300px;
+            background: url(http://www.yue-lian.cn/web/images/img1.jpg);
+            background-size: cover;
+            float: left;
+        }
+
+        .about-us {
+            float: right;
+            width: 40%;
+            padding-right: 5%;
+        }
+
+        .about-us p {
+            margin-top: 10px;
+        }
+
+        #about:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        #products .layout {
+            max-width: 1000px;
+            margin: 0 auto;
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .product-lists {
+            width: 400px;
+            margin: 10px;
+        }
+
+        .product-lists img {
+            width: 400px;
+        }
+
+        .product-lists .hover {
+            background: rgba(185, 207, 237, .85);
+            position: absolute;
+            width: 400px;
+            height: 300px;
+            opacity: 0;
+            font-size: 50px;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .product-lists .hover:hover {
+            opacity: 1;
+        }
+
+        #products h2 {
+            text-align: center;
+        }
+
+        #tiny-class {
+            background-color: #f7f7f7;
+            position: relative;
+            z-index: -2;
+        }
+
+        .class-line {
+            max-width: 1140px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #tiny-class h1 {
+            padding-top: 30px;
+            padding-bottom: 50px;
+        }
+
+        .class-line li {
+            list-style: none;
+            text-align: center;
+            position: relative;
+            padding-bottom: 120px;
+        }
+
+        .class-line li:last-child {
+            padding-bottom: 0;
+            width: 200px;
+            height: 200px;
+            border: 3px solid #ccc;
+            border-radius: 100px;
+            margin: 0 auto;
+            font-size: 40px;
+            letter-spacing: 1px;
+            background: #fff;
+        }
+
+        .class-line li img {
+            width: 200px;
+            height: 200px;
+            border: 3px solid #ccc;
+            border-radius: 100px;
+        }
+
+        .class-line li:nth-child(odd) > .summary {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 300px;
+        }
+
+        .class-line li:nth-child(even) > .summary {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 300px;
+        }
+
+        .class-line li:after {
+            position: absolute;
+            content: '';
+            display: block;
+            left: 50%;
+            top: 0;
+            border-left: 2px solid #ccc;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #contact {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1200px;
+        }
+
+        #contact .info {
+            width: 60%;
+            margin-top: 40px;
+            display: inline-block;
+        }
+
+        #contact .info input[type='text'] {
+            width: 46%;
+            display: inline-block;
+            margin: 7px auto;
+            color: #999;
+            background: 0 0;
+            padding: 10px;
+            outline: 0;
+            border: 1px solid #999;
+            border-radius: 5px;
+        }
+
+        #contact textarea {
+            width: 94%;
+            margin: 2em 0 0;
+            color: #999;
+            resize: none;
+            background: 0 0;
+            height: 150px;
+            padding: 15px;
+            outline: 0;
+            border: 1px solid #999;
+            border-radius: 5px;
+        }
+
+        #contact .info input[type='submit'] {
+            color: #fff;
+            padding: 9px 30px;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 27px 0 0;
+            border-radius: 5px;
+            border: 2px solid #3598db;
+            background: #3598db;
+        }
+
+        .contact-icon {
+            width: 35%;
+            float: right;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .contact-icon .address span {
+            display: block;
+            width: 32px;
+            height: 48px;
+            background: url(http://www.yue-lian.cn/web/images/contact.png);
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+        }
+
+        .contact-icon .email span {
+            display: block;
+            width: 32px;
+            height: 48px;
+            background: url(http://www.yue-lian.cn/web/images/contact.png);
+            background-position: -37px 0;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+        }
+
+        .contact-icon .tel span {
+            display: block;
+            width: 32px;
+            height: 48px;
+            background: url(http://www.yue-lian.cn/web/images/contact.png);
+            background-position: -71px 0;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+        }
+
+        footer {
+            background: #333;
+            margin-top: 20px;
+        }
+
+        footer p {
+            text-align: center;
+            color: white;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+<nav>
+    <img src="http://www.yue-lian.cn/web/images/logo.png" alt="">
+    <a href="#yue-lian">悦练</a>
+    <a href="#about">关于</a>
+    <a href="#products">产品</a>
+    <a href="#tiny-class">微课</a>
+    <a href="#contact">联系我们</a>
+</nav>
+<header>
+    <div class="info">
+        <p>南京洛博维时信息科技有限公司创办于2013年，专业致力于开发适合当前中国教育教学以及课程改革的智能教学互动平台。通过“互联网+教育”的概念，为学校定制基于云端的电子化教学解决方案。</p>
+        <a href="#servive">Click</a>
+    </div>
+</header>
+<section id="yue-lian">
+    <h1>悦 练</h1>
+    <div class="layout">
+        <div class="lists">
+            <img src="http://www.yue-lian.cn/web/images/view-1.png" alt="">
+            <h2>“云”资源共享</h2>
+            <p>
+                海量云资源、云题库；打通地域限制，共享教育资源。系统将全网提供各大名校课件、教学资源，方便教师在备课及资料准备过程当中汲取各校所长；全网不同难度等级，不同题型各科目上百万道题目，实现因材施教，为不同水平学生定制合适的学习资源。</p>
+        </div>
+        <div class="lists">
+            <img src="http://www.yue-lian.cn/web/images/view-2.png" alt="">
+            <h2>校本资源库建设</h2>
+            <p>
+                整合各学科各年级段学习资源，建立具有本校特色的教育资源库；建立学校个性化题库与课件资源。实现从纸质教学资源到电子版的简易转换；并且教师端平板电脑能够实现各种格式类型的教学资料（word,ppt,pdf等）的上传。</p>
+        </div>
+        <div class="lists">
+            <img src="http://www.yue-lian.cn/web/images/view-3.png" alt="">
+            <h2>作业电子化</h2>
+            <p>
+                无纸化作业，轻松出题批改，从自选题库，学校题库与系统题库中挑选章节题目，生成作业或试卷，缩短教师出题时间，提高教学效率；标准化题目格式导入，系统自动完成客观题批改，减轻教师负担；作业定向发布，教师设置截止时间，学生将从学生端提交作业。</p>
+        </div>
+        <div class="lists">
+            <img src="http://www.yue-lian.cn/web/images/view-4.png" alt="">
+            <h2>课堂互动</h2>
+            <p>
+                通过课前同步课件与作业等资料，课件共享后学生端可显示课件，提高学生课堂参与程度；学生通过课前预习，课中参与，课后复习成为学习的主导，真正实现翻转课堂；通过发放课堂作业，互动答题等方式，教师能够实时了解学生学习情况。
+            </p>
+        </div>
+    </div>
+</section>
+<section id="about">
+    <div class="img"></div>
+    <div class="about-us">
+        <h1>关于我们</h1>
+        <h2>我们的团队team</h2>
+        <p>
+            产品的开发团队工作扎实、积极进取，产品内涵还在不断提升过程中。产品开发过程中保持与学校的密切沟通与跟踪，根据学校、教师和同学的使用体验和专家意见进行更新升级与功能更新。专业技术团队将为学校提供强大的技术支持，为建立学校电子教育与教学平台提供技术保障。南京洛博维时信息科技有限公司创办于2013年，专业致力于开发适合当前中国教育教学以及课程改革的智能教学互动平台。通过“互联网+教育”的概念，为学校定制基于云端的电子化教学解决方案。</p>
+    </div>
+</section>
+<section id="products">
+    <h1>产 品</h1>
+    <div class="layout">
+        <div class="product-lists">
+            <div class="hover"><br>+</div>
+            <img src="http://www.yue-lian.cn/web/images/img10.jpg" alt="">
+            <h2>相关描述</h2>
+        </div>
+        <div class="product-lists">
+            <div class="hover"><br>+</div>
+            <img src="http://www.yue-lian.cn/web/images/img11.jpg" alt="">
+            <h2>相关描述</h2>
+        </div>
+        <div class="product-lists">
+            <div class="hover"><br>+</div>
+            <img src="http://www.yue-lian.cn/web/images/img12.jpg" alt="">
+            <h2>相关描述</h2>
+        </div>
+        <div class="product-lists">
+            <div class="hover"><br>+</div>
+            <img src="http://www.yue-lian.cn/web/images/img13.jpg" alt="">
+            <h2>相关描述</h2>
+        </div>
+        <div class="product-lists">
+            <div class="hover"><br>+</div>
+            <img src="http://www.yue-lian.cn/web/images/img14.jpg" alt="">
+            <h2>相关描述</h2>
+        </div>
+        <div class="product-lists">
+            <div class="hover"><br>+</div>
+            <img src="http://www.yue-lian.cn/web/images/img15.jpg" alt="">
+            <h2>相关描述</h2>
+        </div>
+    </div>
+</section>
+<section id="tiny-class">
+    <h1>云端微课</h1>
+    <ol class="class-line">
+        <li>
+            <img src="http://www.yue-lian.cn/web/images/b1.png" alt="">
+            <div class="summary">
+                <h2>对每一道题目录制“微课”短视频解答</h2>
+                <p>
+                    视频剪辑方便，做到学生的每个疑问都能得到解答；可将每一堂课进行“微课视频”录制，丰富学校微课资源；学生在教师录制好“微课”后可以及时登陆学生端进行查看，对知识点进行巩固，解决了教师资源不够用的情况；在新课改后，学生的分布非常广泛，很难做到统一答疑，“微课”解决了移动课堂的不稳定性，给教育教学带来了极大的便利。</p>
+            </div>
+        </li>
+        <li>
+            <img src="http://www.yue-lian.cn/web/images/b2.png" alt="">
+            <div class="summary">
+                <h2>轻松自测自评，实时收藏错题，提高学习效率</h2>
+                <p>
+                    快速自测自查，了解自己对知识点的掌握情况；系统分析学生作业（试卷）的正确率；题目收藏功能：收藏经典题目以及错题；逐步电子化，无纸化的教学方式可以让教师更好的投入到教学创新及个性化教育，关注每个学生。</p>
+            </div>
+        </li>
+        <li>
+            <img src="http://www.yue-lian.cn/web/images/b3.png" alt="">
+            <div class="summary">
+                <h2>产品优势</h2>
+                <p>
+                    产品开发团队驻点省级重点高中两年多时间磨练而成，在学校领导和100多位老师参与的指导和帮助下逐渐成熟。经过了试点班级试用，现已在浙江两个地区的学校全年级的全面使用。产品各项功能完全来自于一线教师和同学的教学实践需求，并经充分的使用检验。从目前的使用情况来看，效果非常显著。完全颠覆了传统教学的模式，解决了传统教学模式中很多不可能完成的难题；极大地提高了学校管理效率、解决了教师和同学的减负问题。</p>
+            </div>
+        </li>
+        <li>
+            <h1>more</h1>
+        </li>
+    </ol>
+</section>
+<section id="contact">
+    <h1>联系我们</h1>
+    <form action="" method="post" class="info">
+        <input type="text" value="Name" onfocus="this.value = '';"
+               onblur="if (this.value == '') {this.value = 'Name';}">
+        <input type="text" value="Email" onfocus="this.value = '';"
+               onblur="if (this.value == '') {this.value = 'Email';}">
+        <textarea onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message';}"></textarea>
+        <input type="submit" value="SUBMIT">
+    </form>
+    <div class="contact-icon">
+        <div class="address">
+            <span></span>
+            <p>南京市栖霞区兴智科技园</p>
+        </div>
+        <div class="email">
+            <span></span>
+            <p>admin@yue-lian.cn</p>
+        </div>
+        <div class="tel">
+            <span></span>
+            <p>+025 85525886</p>
+        </div>
+    </div>
+</section>
+<footer>
+    <p>Copyright © 2016.Nanjing Global Vision Information Technology Co., Ltd.</p>
+</footer>
+<script src="http://js.jirengu.com/js/render/edit.js?3.25.5"></script>
+<script>
+    jsbinShowEdit && jsbinShowEdit({
+        "static": "http://js.jirengu.com",
+        "root": "http://js.jirengu.com"
+    });
+</script>
+</body>
+
+</html>

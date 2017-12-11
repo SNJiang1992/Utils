@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- 1. 在页面宽度> 1200px 时页面背景为红色 
+2. 在页面1200px>=宽度> 900px  时页面背景为绿色
+3. 在页面900px>=宽度> 600px  时页面背景为黄色
+4. 宽度<=600px 背景为灰色 -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        @media screen and (min-width:1200px) {
+            body {
+                background: red;
+            }
+        }
+        
+        @media screen and (min-width:900px) and (max-width:1200px) {
+            body {
+                background: green;
+            }
+        }
+        
+        @media screen and (min-width:600px) and (max-width:900px) {
+            body {
+                background: yellow;
+            }
+        }
+        
+        @media screen and (max-width:600px) {
+            body {
+                background: grey;
+            }
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+</body>
+
+</html>

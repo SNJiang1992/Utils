@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        #root {
+            margin: auto;
+            width: 500px;
+            height: 300px;
+            background: white;
+        }
+        
+        .clear-fix::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        
+        .tab-container {
+            border-bottom: 1px solid #333;
+        }
+        
+        .active {
+            color: red;
+            border-radius: 2px;
+            border-top: 1px solid #333;
+            border-right: 1px solid #333;
+            border-left: 1px solid #333;
+            position: relative;
+            bottom: -1px;
+            background: white;
+        }
+        
+        .tab-item {
+            padding: 20px;
+            float: left;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script>
+        //数据模型
+        var baseConfig = {
+            tabList: [{
+                tabname: 'tab1',
+                tabcontent: '渲染tab1'
+            }, {
+                tabname: 'tab2',
+                tabcontent: '渲染tab2'
+            }, {
+                tabname: 'tab3',
+                tabcontent: '渲染tab3'
+            }],
+            indexTab: 2
+        }
+        var TabFactory = function(tabConfig) {
+                this.tabConfig = Object.assign({}, baseConfig, tabConfig);
+                //高亮的是哪一个
+                this.activeIndex = this.tabConfig.indexTab;
+            }
+            //渲染
+        TabFactory.prototype.render = function(container) {
+
+                var tabList = this.tabConfig['tabList']
+                    //渲染头部
+                var headerHtml = tabList.map(function(tab) {
+                    var tabname = tab.tabname;
+                    return `<div class='tab-item'>${tabname}</div>`
+                }).join('');
+                var bodyHtml = `<div class='tab-body'></div>`
+                var finalHtml = `<div class='tab-container clear-fix'>
+                                ${headerHtml}
+                                </div>
+                                ${bodyHtml}`
+                    //渲染内容区
+                container.innerHTML = finalHtml
+                    //挂载事件
+                this.renderStyle(this.activeIndex);
+                this.addEvent();
+            }
+            //click
+        TabFactory.prototype.click = function() {
+
+        }
+        TabFactory.prototype.renderStyle = function(index) {
+                var tabDomList = document.querySelectorAll('.tab-item');
+                var tabItem = tabDomList[index];
+                var tabBodyContainer = document.querySelectorAll('.tab-body')[0]
+                    //去掉之前的active
+                tabDomList[this.activeIndex].classList.remove('active');
+                //增加active
+                tabItem.classList.add('active');
+                tabBodyContainer.innerHTML = this.tabConfig.tabList[index].tabcontent
+            }
+            //挂载事件
+        TabFactory.prototype.addEvent = function() {
+            var tabDomList = document.querySelectorAll('.tab-item');
+            var _this = this;
+            //将类数组转化为数组
+            [].slice.call(tabDomList).forEach(function(tabItem, index) {
+                tabItem.addEventListener('click', function() {
+                    if (index == _this.activeIndex) {
+                        return
+                    }
+                    _this.renderStyle(index);
+                    //重新赋值active
+                    _this.activeIndex = index
+                })
+            })
+
+        }
+        var container = document.getElementById('root');
+        var tabInstance = new TabFactory({})
+        tabInstance.render(container)
+    </script>
+</body>
+
+</html>
